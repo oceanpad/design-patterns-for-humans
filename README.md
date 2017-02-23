@@ -24,13 +24,13 @@
 - 以正确的方式用在正确的地方，设计模式会给你带来许多好处。相反，你就会得到令人呕吐的代码。
 
 > 下面这些代码是基于PHP-7的，然而这并不代表你应用到其他的语言，因为设计模式是通用的。
-设
-计模式的种类
+
+设计模式的种类
 -----------------
 
-* [创建型](#创建型设计模式)
-* [结构型](#结构型设计模式)
-* [行为型](#行为型设计模式)
+* [创建型设计模式](#创建型设计模式)
+* [结构型设计模式](#结构型设计模式)
+* [行为型设计模式](#行为型设计模式)
 
 创建型设计模式
 ==========================
@@ -105,21 +105,21 @@ echo 'Height: ' . $door->getHeight();
 当创建一个对象不仅仅是简单的赋值和一些简单的逻辑，这时候很有必要将他们放在一个工厂里去防止重复你的代码。
 
 
-🏭 Factory Method
+🏭 工厂方法模式
 --------------
 
-Real world example
-> Consider the case of a hiring manager. It is impossible for one person to interview for each of the positions. Based on the job opening, she has to decide and delegate the interview steps to different people. 
+真实世界实例
+> 想象一下人才部管理者，不可能让一个人去面试每个岗位。根据开放的职位，她必须委派不同的人去面试不同的职位。
 
-In plain words
-> It provides a way to delegate the instantiation logic to child classes. 
+简单的解释
+> 工厂方法模式提供了一种向子类提供实例逻辑的方法。
 
-Wikipedia says
-> In class-based programming, the factory method pattern is a creational pattern that uses factory methods to deal with the problem of creating objects without having to specify the exact class of the object that will be created. This is done by creating objects by calling a factory method—either specified in an interface and implemented by child classes, or implemented in a base class and optionally overridden by derived classes—rather than by calling a constructor.
+维基百科
+> 定义一个接口用于创建对象，但是让子类决定初始化哪个类。工厂方法把一个类的初始化下放到子类。
  
- **Programmatic Example**
+ **编程实例**
  
-Taking our hiring manager example above. First of all we have an interviewer interface and some implementations for it
+继续我们的人才部管理者的例子，首先我们拥有一个面试接口以及一些对它的实装。
 
 ```php
 interface Interviewer {
@@ -139,7 +139,7 @@ class CommunityExecutive implements Interviewer {
 }
 ```
 
-Now let us create our `HiringManager`
+现在让我们创建我们的 `HiringManager`
 
 ```php
 abstract class HiringManager {
@@ -153,7 +153,7 @@ abstract class HiringManager {
     }
 }
 ```
-Now any child can extend it and provide the required interviewer
+现在每个子类都可以通过扩展它来提供需要的面试官。
 ```php
 class DevelopmentManager extends HiringManager {
     public function makeInterviewer() : Interviewer {
@@ -167,8 +167,7 @@ class MarketingManager extends HiringManager {
     }
 }
 ```
-and then it can be used as
-
+然后，可以这样来利用他
 ```php
 $devManager = new DevelopmentManager();
 $devManager->takeInterview(); // Output: Asking about design patterns
@@ -177,14 +176,14 @@ $marketingManager = new MarketingManager();
 $marketingManager->takeInterview(); // Output: Asking about community building.
 ```
 
-**When to use?**
+**什么时候利用工厂方法模式？**
 
-Useful when there is some generic processing in a class but the required sub-class is dynamically decided at runtime. Or putting it in other words, when the client doesn't know what exact sub-class it might need.
+当有一个类拥有通用的处理逻辑但是需要子类在运行时去动态地决定处理过程。换句话说，就是客户不知道它的子类真正需要的东西。
 
-🔨 Abstract Factory
+🔨 抽象工厂模式
 ----------------
 
-Real world example
+真实世界实例
 > Extending our door example from Simple Factory. Based on your needs you might get a wooden door from a wooden door shop, iron door from an iron shop or a PVC door from the relevant shop. Plus you might need a guy with different kind of specialities to fit the door, for example a carpenter for wooden door, welder for iron door etc. As you can see there is a dependency between the doors now, wooden door needs carpenter, iron door needs a welder etc.
 
 In plain words
